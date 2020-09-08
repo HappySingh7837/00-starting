@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1039629311106",
+    "firebase_url": "https://compound-76920.firebaseio.com",
+    "project_id": "compound-76920",
+    "storage_bucket": "compound-76920.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1039629311106:android:744b1a6d3bfffb9811e89b",
+        "android_client_info": {
+          "package_name": "com.filledstacks.compound"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1039629311106-ag25dunvbpqrl8e6arlg0af9ujoe3lnm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxwTSqDn-8uqChydc2-XW6WLSy0ZWklfg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1039629311106-ag25dunvbpqrl8e6arlg0af9ujoe3lnm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
