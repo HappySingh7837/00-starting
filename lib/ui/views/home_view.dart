@@ -12,6 +12,7 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelProvider<HomeViewModel>.withConsumer(
         viewModel: HomeViewModel(),
+        onModelReady: (model) => model.fetchPosts(),
         builder: (context, model, child) => Scaffold(
               backgroundColor: Colors.white,
               floatingActionButton: FloatingActionButton(
@@ -35,13 +36,20 @@ class HomeView extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Expanded(
-                        child: ListView.builder(
-                      itemCount: 3,
-                      itemBuilder: (context, index) => PostItem(
-                        post: Post(title: '$index Title'),
-                      ),
-                    ))
+                     Expanded(
+                       child: model.posts != null
+                        ? ListView.builder(
+                          itemCount: model.posts.length,
+                          itemBuilder: (context, index) => PostItem(
+                          post: model.posts[index],
+                  ),
+                )
+              : Center(
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation(
+                        Theme.of(context).primaryColor),
+                  ),
+                ))
                   ],
                 ),
               ),

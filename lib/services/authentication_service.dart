@@ -20,6 +20,7 @@ class AuthenticationService {
         email: email,
         password: password,
       );
+      print(authResult);
       await _populateCurrentUser(authResult.user);
       return authResult.user != null;
     } catch (e) {

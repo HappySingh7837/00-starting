@@ -21,7 +21,11 @@ class CreatePostView extends StatelessWidget {
                     valueColor: AlwaysStoppedAnimation(Colors.white),
                   ),
             onPressed: () {
-              // TODO: Add Post
+              if(!model.busy){
+                model.addPost(
+                  title: titleController.text
+                  );
+              }
             },
             backgroundColor:
                 !model.busy ? Theme.of(context).primaryColor : Colors.grey[600],
