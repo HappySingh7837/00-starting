@@ -1,3 +1,4 @@
+import 'package:compound/ui/views/home_view.dart';
 import 'package:compound/ui/views/startup_view.dart';
 import 'package:flutter/material.dart';
 import 'package:compound/services/navigation_service.dart';
@@ -25,8 +26,7 @@ class MyApp extends StatelessWidget {
       ),
       navigatorKey: locator<NavigationService>().navigationKey,
       theme: ThemeData(
-        primaryColor: Color.fromARGB(255, 9, 202, 172),
-        backgroundColor: Color.fromARGB(255, 26, 27, 30),
+        primaryColor: Color(0xff19c7c1),
         textTheme: Theme.of(context).textTheme.apply(
               fontFamily: 'Open Sans',
             ),

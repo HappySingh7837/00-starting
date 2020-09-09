@@ -44,11 +44,12 @@ class LoginView extends StatelessWidget {
                   children: [
                     BusyButton(
                       title: 'Login',
+                      busy: model.busy,
                       onPressed: () {
                         model.login(
                           email: emailController.text,
                           password: passwordController.text,
-                          );
+                        );
                       },
                     )
                   ],

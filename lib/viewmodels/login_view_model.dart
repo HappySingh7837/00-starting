@@ -1,42 +1,49 @@
 import 'package:compound/constants/route_names.dart';
 import 'package:compound/locator.dart';
-import 'package:compound/services/authenticate_service.dart';
+import 'package:compound/services/authentication_service.dart';
 import 'package:compound/services/dialog_service.dart';
 import 'package:compound/services/navigation_service.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 
 import 'base_model.dart';
+
 class LoginViewModel extends BaseModel {
-  final NavigationService _navigationService = locator<NavigationService>();
+  final AuthenticationService _authenticationService =
+      locator<AuthenticationService>();
   final DialogService _dialogService = locator<DialogService>();
-  final AuthenticateService _authenticateService = locator<AuthenticateService>();
+  final NavigationService _navigationService = locator<NavigationService>();
 
-  void navigateToSignUp(){
-    _navigationService.navigateTo(SignUpViewRoute);
-  }
-
-  Future login ({@required String email,@required String password})async{
+  Future login({
+    @required String email,
+    @required String password,
+  }) async {
     setBusy(true);
-    var result=await _authenticateService.loginWithEmail(
-      email: email, password: password
-      );
-      setBusy(false);
-      if(result is bool){
-        if(result){
-          _navigationService.navigateTo(HomeViewRoute);
-        }
-        else{
-          await _dialogService.showDialog(
-            title: 'Login Failed',
-            description: 'Invalid Username And Password, Please Try Again Later!'
-          );
-        }
-          
-      }else{
+
+    var result = await _authenticationService.loginWithEmail(
+      email: email,
+      password: password,
+    );
+
+    setBusy(false);
+
+    if (result is bool) {
+      if (result) {
+        _navigationService.navigateTo(HomeViewRoute);
+      } else {
         await _dialogService.showDialog(
-          title: 'Login Failed',
-          description: 'No user exist, Please Try Again Later!'
+          title: 'Login Failure',
+          description: 'General login failure. Please try again later',
         );
       }
+    } else {
+      await _dialogService.showDialog(
+        title: 'Login Failure',
+        description: result,
+      );
+    }
+  }
+
+  void navigateToSignUp() {
+    _navigationService.navigateTo(SignUpViewRoute);
   }
 }
