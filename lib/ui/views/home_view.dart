@@ -40,8 +40,14 @@ class HomeView extends StatelessWidget {
                        child: model.posts != null
                         ? ListView.builder(
                           itemCount: model.posts.length,
-                          itemBuilder: (context, index) => PostItem(
+                          itemBuilder: (context, index) => GestureDetector(
+                            onTap: () => model.editPost(index),
+                            child:PostItem(
                           post: model.posts[index],
+                          //call back
+                          onDeleteItem: () => model.deletePost(index),
+                          )
+                           
                   ),
                 )
               : Center(

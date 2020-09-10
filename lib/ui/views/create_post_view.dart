@@ -1,3 +1,4 @@
+import 'package:compound/models/post.dart';
 import 'package:compound/ui/shared/ui_helpers.dart';
 import 'package:compound/ui/widgets/input_field.dart';
 import 'package:compound/viewmodels/create_post_view_model.dart';
@@ -6,13 +7,19 @@ import 'package:provider_architecture/provider_architecture.dart';
 
 class CreatePostView extends StatelessWidget {
   final titleController = TextEditingController();
-
-  CreatePostView({Key key}) : super(key: key);
+  final Post edittingPost;
+  CreatePostView({Key key,this.edittingPost}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ViewModelProvider<CreatePostViewModel>.withConsumer(
       viewModel: CreatePostViewModel(),
+      onModelReady: (model){
+        //update the text in controller
+        titleController.text = edittingPost?.title??'';
+        //set the editing post
+        model.setEdittingPost(edittingPost);
+      },
       builder: (context, model, child) => Scaffold(
           floatingActionButton: FloatingActionButton(
             child: !model.busy

@@ -12,11 +12,26 @@ class CreatePostViewModel extends BaseModel {
   final DialogService _dialogService = locator<DialogService>();
   final NavigationService _navigationService = locator<NavigationService>();
 
+  Post _edittingPost;
+
+  void setEdittingPost(Post post){
+    _edittingPost=post;
+  }
+
+  bool get _editting => _edittingPost!=null;
+
   Future addPost({@required String title}) async {
-    setBusy(true);    
-    var result= await _firestoreService.addPost(
-      Post(userId: currentUser.id, title: title)
-    );
+    setBusy(true); 
+    var result;   
+     if (!_editting) {
+      result = await _firestoreService
+          .addPost(Post(title: title, userId: currentUser.id));
+    } else {
+      result = await _firestoreService.updatePost(Post(
+        title: title,
+        userId: _edittingPost.userId,
+        documentId: _edittingPost.documentId,
+      ));
     setBusy(false);
 
     if(result is String){
@@ -30,9 +45,7 @@ class CreatePostViewModel extends BaseModel {
         description: 'Post Added',
       );
     }
-
     _navigationService.pop();
-
   }
-
+ }
 }

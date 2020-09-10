@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:compound/constants/route_names.dart';
 import 'package:compound/locator.dart';
 import 'package:compound/models/post.dart';
@@ -32,6 +34,28 @@ class HomeViewModel extends BaseModel {
     }
   }
   
-  void navigateToCreateView() =>
-      _navigationService.navigateTo(CreatePostViewRoute);
+  Future navigateToCreateView() async {
+   await _navigationService.navigateTo(CreatePostViewRoute);
+   await fetchPosts();
+  }
+
+ Future deletePost(int index) async {
+   var dialogResponse = await _dialogService.showConfirmationDialog(
+     title: 'Are You Sure To Delete Post',
+     description: 'Do you want to Delete Post',
+     confirmationTitle: 'Yes',
+     cancelTitle: 'No',
+   );
+
+   if(dialogResponse.confirmed){
+     setBusy(true);
+     await _firestoreService.deletePost(_posts[index].documentId);
+   }
+ }
+
+ void editPost(int index){
+ _navigationService.navigateTo(CreatePostViewRoute,
+ arguments: _posts[index]);
+ }
+     
 }

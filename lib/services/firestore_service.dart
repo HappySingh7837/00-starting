@@ -51,7 +51,7 @@ class FirestoreService {
       var postDocuments = await _postscollectionReference.getDocuments();
       if (postDocuments.documents.isNotEmpty) {
         return postDocuments.documents
-            .map((snapshot) => Post.fromMap(snapshot.data))
+            .map((snapshot) => Post.fromMap(snapshot.data,snapshot.documentID))
             .where((mappedItem) => mappedItem.title != null)
             .toList();
       }
@@ -59,7 +59,24 @@ class FirestoreService {
       if (e is PlatformException) {
         return e.message;
       }
+      return e.toString();
+    }
+  }
 
+  Future deletePost(String docId) async {
+    await _postscollectionReference.document(docId).delete();
+  }
+
+
+  Future updatePost(Post post) async {
+    try{
+      await _postscollectionReference.document(post.documentId).
+      updateData(post.toMap());
+      return true;
+    }catch(e){
+      if(e is PlatformException) {
+        return e.message;
+      }
       return e.toString();
     }
   }
