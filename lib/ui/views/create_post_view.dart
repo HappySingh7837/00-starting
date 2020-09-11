@@ -55,18 +55,26 @@ class CreatePostView extends StatelessWidget {
                 verticalSpaceMedium,
                 Text('Post Image'),
                 verticalSpaceSmall,
-                Container(
+                GestureDetector(
+                // When we tap we call selectImage
+                onTap: () => model.selectImage(),
+                child: Container(
                   height: 250,
                   decoration: BoxDecoration(
                       color: Colors.grey[200],
                       borderRadius: BorderRadius.circular(10)),
                   alignment: Alignment.center,
-                  child: Text(
-                    'Tap to add post image',
-                    style: TextStyle(color: Colors.grey[400]),
-                  ),
-                )
-              ],
+                  // If the selected image is null we show "Tap to add post image"
+                  child: model.selectedImage == null
+                      ? Text(
+                          'Tap to add post image',
+                          style: TextStyle(color: Colors.grey[400]),
+                        )
+                        // If we have a selected image we want to show it
+                      : Image.file(model.selectedImage),
+                ),
+              )               
+             ],
             ),
           )),
     );

@@ -1,5 +1,4 @@
-import 'dart:html';
-
+import 'dart:io';
 import 'package:flutter/foundation.dart';
 
 class Post {
@@ -7,11 +6,13 @@ class Post {
   final String imageUrl;
   final String userId;
   final String documentId;
+  final String imageFileName;
   Post({
     @required this.userId,
     @required this.title,
     this.imageUrl,
     this.documentId,
+    this.imageFileName,
   });
 
   Map<String, dynamic> toMap() {
@@ -19,6 +20,7 @@ class Post {
       'userId': userId,
       'title': title,
       'imageUrl': imageUrl,
+      'imageFileName': imageFileName,
     };
   }
 
@@ -29,6 +31,7 @@ class Post {
       title: map['title'],
       imageUrl: map['imageUrl'],
       userId: map['userId'],
+      imageFileName: map['imageFileName'],
       documentId: documentId,
     );
   }

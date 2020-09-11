@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:compound/models/post.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +10,7 @@ class PostItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 60,
+      height: post.imageUrl != null ? null : 60,
       margin: const EdgeInsets.only(top: 20),
       alignment: Alignment.center,
       child: Row(
@@ -17,7 +18,24 @@ class PostItem extends StatelessWidget {
           Expanded(
               child: Padding(
             padding: const EdgeInsets.only(left: 15.0),
-            child: Text(post.title),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                post.imageUrl!=null?SizedBox(
+                  height: 250,
+                  child: Center(
+                    child:CachedNetworkImage(
+                      imageUrl: post.imageUrl,
+                      placeholder: (context,url) =>
+                      CircularProgressIndicator(),
+                      errorWidget: (context,url,error) =>
+                      Icon(Icons.error),
+                      ),
+                  ),
+                ):Container(),
+                Text(post.title),
+              ],
+            )
           )),
           IconButton(
             icon: Icon(Icons.close),
